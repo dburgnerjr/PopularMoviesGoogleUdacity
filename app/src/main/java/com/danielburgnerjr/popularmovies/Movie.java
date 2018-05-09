@@ -13,6 +13,7 @@ import java.util.List;
 public class Movie implements Parcelable {
     public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
 
+    @SerializedName("title")
     private String strTitle;
 
     @SerializedName("poster_path")
@@ -24,6 +25,9 @@ public class Movie implements Parcelable {
     @SerializedName("backdrop_path")
     private String strBackdrop;
 
+    @SerializedName("release_date")
+    private String strReleaseDate;
+
     public Movie() {}
 
     protected Movie(Parcel in) {
@@ -31,6 +35,7 @@ public class Movie implements Parcelable {
         strPoster = in.readString();
         strDescription = in.readString();
         strBackdrop = in.readString();
+        strReleaseDate = in.readString();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -73,6 +78,14 @@ public class Movie implements Parcelable {
         this.strBackdrop = strB;
     }
 
+    public void setReleaseDate(String strRD) {
+        this.strReleaseDate = strRD;
+    }
+
+    public String getReleaseDate() {
+        return strReleaseDate;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -84,9 +97,11 @@ public class Movie implements Parcelable {
         parP.writeString(strPoster);
         parP.writeString(strDescription);
         parP.writeString(strBackdrop);
+        parP.writeString(strReleaseDate);
     }
 
     public static class MovieResult {
+        @SerializedName("results")
         private List<Movie> mResults;
 
         public List<Movie> getResults() {

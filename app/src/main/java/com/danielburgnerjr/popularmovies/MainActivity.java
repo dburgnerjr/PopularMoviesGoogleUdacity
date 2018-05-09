@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -116,10 +117,19 @@ public class MainActivity extends AppCompatActivity {
             return (mMovieList == null) ? 0 : mMovieList.size();
         }
 
-        public void setMovieList(List<Movie> mMovieList) {
-            this.mMovieList = new ArrayList<Movie>();
-            this.mMovieList.addAll(mMovieList);                             // NPE
-            notifyDataSetChanged();
+        public void setMovieList(List<Movie> mMovie) {
+            mMovieList = new ArrayList<Movie>();
+            if (mMovie == null) {
+                List<Movie> movies = new ArrayList<>();
+
+                for (int i = 0; i < 2; i++) {
+                    movies.add(new Movie());
+                }
+                mMovieList.addAll(movies);
+            } else {
+                mMovieList.addAll(mMovie);                             // NPE
+                notifyDataSetChanged();
+            }
         }
     }
 }
