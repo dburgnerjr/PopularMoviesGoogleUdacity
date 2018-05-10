@@ -46,7 +46,7 @@ public class Movie implements Parcelable {
         public Movie[] newArray(int nSize) { return new Movie[nSize]; }
     };
 
-    private String getTitle() {
+    public String getTitle() {
         return strTitle;
     }
 

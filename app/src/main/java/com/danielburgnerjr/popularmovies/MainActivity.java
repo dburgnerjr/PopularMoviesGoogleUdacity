@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.Spinner;
+
 
 import com.squareup.picasso.Picasso;
 
@@ -34,14 +34,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         rvRecyclerView = (RecyclerView) findViewById(R.id.rvRecyclerView);
         rvRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         maAdapter = new MoviesAdapter(this);
         rvRecyclerView.setAdapter(maAdapter);
-        getPopularMovies();
+
+        Spinner spnMenuOptions = (Spinner) findViewById(R.id.spnMenuOptions);
+
+        String[] strOptions = new String[] {"Popular Movies", "Top Rated Movies"};
+
+        ArrayAdapter<String> arAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_dropdown_item, strOptions);
+
+        spnMenuOptions.setAdapter(arAdapter);
+
+        spnMenuOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                switch ((String)parent.getItemAtPosition(position)) {
+                    case "Popular Movies":
+                        getPopularMovies();
+                        break;
+                    case "Top Rated Movies":
+                        getTopRatedMovies();
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
     }
 
     private void getPopularMovies() {
@@ -56,10 +82,35 @@ public class MainActivity extends AppCompatActivity {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         MovieAPI mtaService = raAdapter.create(MovieAPI.class);
-        mtaService.getPopularMovies(new Callback<Movie.MovieResult>() {     // NPE
+        mtaService.getPopularMovies(new Callback<Movie.MovieResult>() {
             @Override
             public void success(Movie.MovieResult movieResult, Response response) {
-                maAdapter.setMovieList(movieResult.getResults());           // NPE
+                maAdapter.setMovieList(movieResult.getResults());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
+    private void getTopRatedMovies() {
+        RestAdapter raAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://api.themoviedb.org/3")
+                .setRequestInterceptor(new RequestInterceptor() {
+                    @Override
+                    public void intercept(RequestFacade rfRequest) {
+                        rfRequest.addEncodedQueryParam("api_key", "8a6f42fe5f7efc6139cda365db5c89a1");
+                    }
+                })
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .build();
+        MovieAPI mtaService = raAdapter.create(MovieAPI.class);
+        mtaService.getTopRatedMovies(new Callback<Movie.MovieResult>() {
+            @Override
+            public void success(Movie.MovieResult movieResult, Response response) {
+                maAdapter.setMovieList(movieResult.getResults());
             }
 
             @Override
@@ -91,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         public MovieViewHolder onCreateViewHolder(ViewGroup parent, int nViewType) {
             View vView = mInflater.inflate(R.layout.movie_list, parent, false);
             final MovieViewHolder mvhViewHolder = new MovieViewHolder(vView);
-/*          vView.setOnClickListener(new View.OnClickListener() {
+            vView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View vView) {
                     int nPosition = mvhViewHolder.getAdapterPosition();
@@ -100,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                     mContext.startActivity(intI);
                 }
             });
-*/         return mvhViewHolder;
+           return mvhViewHolder;
         }
 
         @Override
@@ -119,17 +170,8 @@ public class MainActivity extends AppCompatActivity {
 
         public void setMovieList(List<Movie> mMovie) {
             mMovieList = new ArrayList<Movie>();
-            if (mMovie == null) {
-                List<Movie> movies = new ArrayList<>();
-
-                for (int i = 0; i < 2; i++) {
-                    movies.add(new Movie());
-                }
-                mMovieList.addAll(movies);
-            } else {
-                mMovieList.addAll(mMovie);                             // NPE
-                notifyDataSetChanged();
-            }
+            mMovieList.addAll(mMovie);
+            notifyDataSetChanged();
         }
     }
 }
