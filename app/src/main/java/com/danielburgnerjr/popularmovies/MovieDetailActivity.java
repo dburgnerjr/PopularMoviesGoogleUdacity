@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -24,6 +25,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView tvDescription;
     TextView tvReleaseDateHeading;
     TextView tvReleaseDate;
+    TextView tvRatingHeading;
+    RatingBar rbRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +51,14 @@ public class MovieDetailActivity extends AppCompatActivity {
         tvDescription = (TextView) findViewById(R.id.movie_description);
         tvReleaseDateHeading = (TextView) findViewById(R.id.release_date_heading);
         tvReleaseDate = (TextView) findViewById(R.id.release_date);
+        tvRatingHeading = (TextView) findViewById(R.id.rating_heading);
+        rbRating = (RatingBar) findViewById(R.id.rating);
         ivPoster = (ImageView) findViewById(R.id.movie_poster);
 
         tvTitle.setText(mMovie.getTitle());
         tvDescription.setText(mMovie.getDescription());
         tvReleaseDate.setText(mMovie.getReleaseDate());
+        rbRating.setRating(Float.parseFloat(mMovie.getUserRating()));
         Picasso.with(this)
                 .load(mMovie.getPoster())
                 .into(ivPoster);

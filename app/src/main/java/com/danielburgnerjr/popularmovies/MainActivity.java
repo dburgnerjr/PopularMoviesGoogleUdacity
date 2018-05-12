@@ -36,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         rvRecyclerView = (RecyclerView) findViewById(R.id.rvRecyclerView);
+        rvRecyclerView.setHasFixedSize(true);
         rvRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        rvRecyclerView.getLayoutManager().setMeasurementCacheEnabled(false);
         maAdapter = new MoviesAdapter(this);
         rvRecyclerView.setAdapter(maAdapter);
 
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade request) {
-                        request.addEncodedQueryParam("api_key", "8a6f42fe5f7efc6139cda365db5c89a1");
+                        request.addEncodedQueryParam("api_key", getText(R.string.api_key).toString());
                     }
                 })
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade rfRequest) {
-                        rfRequest.addEncodedQueryParam("api_key", "8a6f42fe5f7efc6139cda365db5c89a1");
+                        rfRequest.addEncodedQueryParam("api_key", getText(R.string.api_key).toString());
                     }
                 })
                 .setLogLevel(RestAdapter.LogLevel.FULL)

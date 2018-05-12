@@ -28,6 +28,9 @@ public class Movie implements Parcelable {
     @SerializedName("release_date")
     private String strReleaseDate;
 
+    @SerializedName("vote_average")
+    private String strUserRating;
+
     public Movie() {}
 
     protected Movie(Parcel in) {
@@ -36,6 +39,7 @@ public class Movie implements Parcelable {
         strDescription = in.readString();
         strBackdrop = in.readString();
         strReleaseDate = in.readString();
+        strUserRating = in.readString();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -86,6 +90,14 @@ public class Movie implements Parcelable {
         return strReleaseDate;
     }
 
+    public void setUserRating(String strUR) {
+        this.strUserRating = strUR;
+    }
+
+    public String getUserRating() {
+        return strUserRating;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -98,6 +110,7 @@ public class Movie implements Parcelable {
         parP.writeString(strDescription);
         parP.writeString(strBackdrop);
         parP.writeString(strReleaseDate);
+        parP.writeString(strUserRating);
     }
 
     public static class MovieResult {
