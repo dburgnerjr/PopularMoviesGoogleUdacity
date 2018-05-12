@@ -21,3 +21,5 @@ What Will I Learn After Stage 1?
 You will fetch data from the Internet with theMovieDB API.
 You will use adapters and custom list layouts to populate list views.
 You will incorporate libraries to simplify the amount of code you need to write
+
+To insert the API key, go to the strings.xml file in the res directory and insert your API key in the api_key variable.
