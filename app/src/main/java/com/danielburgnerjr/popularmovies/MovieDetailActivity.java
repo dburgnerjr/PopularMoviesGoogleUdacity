@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 import com.squareup.picasso.Picasso;
 /**
  * Created by dburgnerjr on 6/5/17.
@@ -18,14 +21,24 @@ public class MovieDetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "movie";
 
     private Movie mMovie;
+
+    @InjectView(R.id.ivBackdrop)
     ImageView ivBackdrop;
+    @InjectView(R.id.movie_poster)
     ImageView ivPoster;
+    @InjectView(R.id.movie_title)
     TextView tvTitle;
+    @InjectView(R.id.movie_description_heading)
     TextView tvDescriptionHeading;
+    @InjectView(R.id.movie_description)
     TextView tvDescription;
+    @InjectView(R.id.release_date_heading)
     TextView tvReleaseDateHeading;
+    @InjectView(R.id.release_date)
     TextView tvReleaseDate;
+    @InjectView(R.id.rating_heading)
     TextView tvRatingHeading;
+    @InjectView(R.id.rating)
     RatingBar rbRating;
 
     @Override
@@ -45,15 +58,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         ctlToolbarLayout.setExpandedTitleColor(Color.WHITE);
         ctlToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
 
-        ivBackdrop = (ImageView) findViewById(R.id.ivBackdrop);
-        tvTitle = (TextView) findViewById(R.id.movie_title);
-        tvDescriptionHeading = (TextView) findViewById(R.id.movie_description_heading);
-        tvDescription = (TextView) findViewById(R.id.movie_description);
-        tvReleaseDateHeading = (TextView) findViewById(R.id.release_date_heading);
-        tvReleaseDate = (TextView) findViewById(R.id.release_date);
-        tvRatingHeading = (TextView) findViewById(R.id.rating_heading);
-        rbRating = (RatingBar) findViewById(R.id.rating);
-        ivPoster = (ImageView) findViewById(R.id.movie_poster);
+        ButterKnife.inject(this);
 
         tvTitle.setText(mMovie.getTitle());
         tvDescription.setText(mMovie.getDescription());
@@ -61,9 +66,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         rbRating.setRating(Float.parseFloat(mMovie.getUserRating()));
         Picasso.with(this)
                 .load(mMovie.getPoster())
+                .placeholder(R.drawable.placeholder)   // optional
+                .error(R.drawable.error)
                 .into(ivPoster);
         Picasso.with(this)
                 .load(mMovie.getBackdrop())
+                .placeholder(R.drawable.placeholder)   // optional
+                .error(R.drawable.error)
                 .into(ivBackdrop);
 
     }

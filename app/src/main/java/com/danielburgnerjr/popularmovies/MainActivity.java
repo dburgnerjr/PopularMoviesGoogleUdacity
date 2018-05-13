@@ -14,6 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import com.squareup.picasso.Picasso;
 
@@ -27,7 +29,10 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView rvRecyclerView;
+    @InjectView(R.id.rvRecyclerView)
+    RecyclerView rvRecyclerView;
+    @InjectView(R.id.spnMenuOptions)
+    Spinner spnMenuOptions;
     private MoviesAdapter maAdapter;
 
     @Override
@@ -35,14 +40,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rvRecyclerView = (RecyclerView) findViewById(R.id.rvRecyclerView);
+        ButterKnife.inject(this);
         rvRecyclerView.setHasFixedSize(true);
         rvRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         rvRecyclerView.getLayoutManager().setMeasurementCacheEnabled(false);
         maAdapter = new MoviesAdapter(this);
         rvRecyclerView.setAdapter(maAdapter);
-
-        Spinner spnMenuOptions = (Spinner) findViewById(R.id.spnMenuOptions);
 
         String[] strOptions = new String[] {"Popular Movies", "Top Rated Movies"};
 
@@ -161,7 +164,8 @@ public class MainActivity extends AppCompatActivity {
             Movie movie = mMovieList.get(position);
             Picasso.with(mContext)
                     .load(movie.getPoster())
-                    .placeholder(R.color.colorAccent)
+                    .placeholder(R.drawable.placeholder)   // optional
+                    .error(R.drawable.error)
                     .into(holder.ivImageView);
         }
 
