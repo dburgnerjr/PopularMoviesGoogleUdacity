@@ -13,6 +13,9 @@ import java.util.List;
 public class Movie implements Parcelable {
     public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
 
+    @SerializedName("id")
+    private String strId;
+
     @SerializedName("title")
     private String strTitle;
 
@@ -34,6 +37,7 @@ public class Movie implements Parcelable {
     public Movie() {}
 
     protected Movie(Parcel in) {
+        strId = in.readString();
         strTitle = in.readString();
         strPoster = in.readString();
         strDescription = in.readString();
@@ -49,6 +53,14 @@ public class Movie implements Parcelable {
         @Override
         public Movie[] newArray(int nSize) { return new Movie[nSize]; }
     };
+
+    public String getId() {
+        return strId;
+    }
+
+    public void setId(String strI) {
+        this.strId = strI;
+    }
 
     public String getTitle() {
         return strTitle;
@@ -105,6 +117,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parP, int nI) {
+        parP.writeString(strId);
         parP.writeString(strTitle);
         parP.writeString(strPoster);
         parP.writeString(strDescription);

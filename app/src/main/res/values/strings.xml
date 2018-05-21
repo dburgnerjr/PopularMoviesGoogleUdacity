@@ -4,5 +4,9 @@
     <string name="description_title">Description</string>
     <string name="release_date_title">Release Date</string>
     <string name="rating_title">User Rating</string>
-    <string name="api_key">INSERT API KEY HERE</string>
+    <string name="videos_title">Trailers</string>
+    <string name="reviews_title">Reviews</string>
+    <string name="favorite">Add to Favorites</string>
+    <string name="unfavorite">Remove from Favorites</string>
+    <string name="api_key">8a6f42fe5f7efc6139cda365db5c89a1</string>
 </resources>

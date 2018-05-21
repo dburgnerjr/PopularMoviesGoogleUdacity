@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -26,8 +27,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     ImageView ivBackdrop;
     @InjectView(R.id.movie_poster)
     ImageView ivPoster;
-    @InjectView(R.id.movie_title)
-    TextView tvTitle;
     @InjectView(R.id.movie_description_heading)
     TextView tvDescriptionHeading;
     @InjectView(R.id.movie_description)
@@ -40,6 +39,14 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView tvRatingHeading;
     @InjectView(R.id.rating)
     RatingBar rbRating;
+    @InjectView(R.id.videos_heading)
+    TextView tvVideosHeading;
+    @InjectView(R.id.videos)
+    TextView tvVideos;
+    @InjectView(R.id.reviews_heading)
+    TextView tvReviewsHeading;
+    @InjectView(R.id.reviews)
+    TextView tvReviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +65,16 @@ public class MovieDetailActivity extends AppCompatActivity {
         ctlToolbarLayout.setExpandedTitleColor(Color.WHITE);
         ctlToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
 
+        LinearLayout llMovieLayout = new LinearLayout(getApplicationContext());
+        llMovieLayout.setOrientation(LinearLayout.HORIZONTAL);
+
         ButterKnife.inject(this);
 
-        tvTitle.setText(mMovie.getTitle());
         tvDescription.setText(mMovie.getDescription());
         tvReleaseDate.setText(mMovie.getReleaseDate());
         rbRating.setRating(Float.parseFloat(mMovie.getUserRating()));
+        tvVideos.setText("Coming soon.");
+        tvReviews.setText("Coming soon.");
         Picasso.with(this)
                 .load(mMovie.getPoster())
                 .placeholder(R.drawable.placeholder)   // optional

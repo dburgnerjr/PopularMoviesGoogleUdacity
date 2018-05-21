@@ -7,13 +7,17 @@ package com.danielburgnerjr.popularmovies;
 import retrofit.Callback;
 import retrofit.http.GET;
 
-/**
- * Created by dburgnerjr on 6/5/17.
- */
 public interface MovieAPI {
     @GET("/movie/popular")
     void getPopularMovies(Callback<Movie.MovieResult> cb);
 
     @GET("/movie/top_rated")
     void getTopRatedMovies(Callback<Movie.MovieResult> cb);
+
+    @GET("/movie/{id}/videos")
+    void getMovieVideos(Callback<Movie.MovieResult> cb);
+
+    @GET("/movie/{id}/reviews")
+    void getMovieReviews(Callback<Movie.MovieResult> cb);
+
 }
