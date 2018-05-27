@@ -6,6 +6,7 @@ package com.danielburgnerjr.popularmovies;
 
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.Path;
 
 public interface MovieAPI {
     @GET("/movie/popular")
@@ -15,9 +16,9 @@ public interface MovieAPI {
     void getTopRatedMovies(Callback<Movie.MovieResult> cb);
 
     @GET("/movie/{id}/videos")
-    void getMovieVideos(Callback<Movie.MovieResult> cb);
+    void getMovieVideos(@Path("id") long movieId, Callback<Movie.MovieResult> cb);
 
     @GET("/movie/{id}/reviews")
-    void getMovieReviews(Callback<Movie.MovieResult> cb);
+    void getMovieReviews(@Path("id") long movieId, Callback<Movie.MovieResult> cb);
 
 }

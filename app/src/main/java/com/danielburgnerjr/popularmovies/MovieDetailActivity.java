@@ -73,8 +73,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         tvDescription.setText(mMovie.getDescription());
         tvReleaseDate.setText(mMovie.getReleaseDate());
         rbRating.setRating(Float.parseFloat(mMovie.getUserRating()));
-        tvVideos.setText("Coming soon.");
-        tvReviews.setText("Coming soon.");
+
         Picasso.with(this)
                 .load(mMovie.getPoster())
                 .placeholder(R.drawable.placeholder)   // optional
