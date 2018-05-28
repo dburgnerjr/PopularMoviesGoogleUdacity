@@ -65,13 +65,19 @@
                     android:background="@color/favoritesBackground"
                     android:visibility="visible" />
                 <Button
-                    android:id="@+id/button_remove_from_favorites"
+                    android:id="@+id/unfavorite_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/unfavorite"
                     android:textColor="@color/favoritesTextColor"
                     android:background="@color/favoritesBackground"
                     android:visibility="gone" />
+                <Button
+                    android:id="@+id/watch_trailer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="@string/watch_trailer" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -100,12 +106,12 @@
                 android:text="@string/videos_title"
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
-            <TextView
-                android:id="@+id/videos"
-                android:layout_width="170dp"
-                android:layout_height="30dp"
-                android:textColor="@android:color/black"
-                android:padding="4dp" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/video_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                tools:listitem="@layout/trailer_list" />
             <TextView
                 android:id="@+id/reviews_heading"
                 android:layout_width="170dp"
@@ -114,12 +120,11 @@
                 android:text="@string/reviews_title"
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
-            <TextView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/reviews"
-                android:layout_width="170dp"
-                android:layout_height="30dp"
-                android:textColor="@android:color/black"
-                android:padding="4dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/review_list" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

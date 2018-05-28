@@ -16,9 +16,9 @@ public interface MovieAPI {
     void getTopRatedMovies(Callback<Movie.MovieResult> cb);
 
     @GET("/movie/{id}/videos")
-    void getMovieVideos(@Path("id") long movieId, Callback<Movie.MovieResult> cb);
+    void getMovieVideos(@Path("id") long movieId, Callback<Video.VideoResult> cb);
 
     @GET("/movie/{id}/reviews")
-    void getMovieReviews(@Path("id") long movieId, Callback<Movie.MovieResult> cb);
+    void getMovieReviews(@Path("id") long movieId, Callback<Review.ReviewResult> cb);
 
 }

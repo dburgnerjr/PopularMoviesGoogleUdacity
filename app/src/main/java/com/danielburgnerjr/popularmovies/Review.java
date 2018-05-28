@@ -57,7 +57,7 @@ public class Review implements Parcelable {
         parcel.writeString(strURL);
     }
 
-    public class ReviewResults {
+    public class ReviewResult {
 
         @SerializedName("results")
         private List<Review> reviewList = new ArrayList<>();
