@@ -1,8 +1,10 @@
 package com.danielburgnerjr.popularmovies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +36,7 @@ import java.util.ArrayList;
  * Created by dburgnerjr on 6/5/17.
  */
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieDetailActivity extends AppCompatActivity implements VideoAdapter.Callbacks {
     public static final String EXTRA_MOVIE = "movie";
     public static final String EXTRA_TRAILERS = "trailer";
     public static final String EXTRA_REVIEWS = "review";
@@ -102,33 +104,33 @@ public class MovieDetailActivity extends AppCompatActivity {
         rbRating.setRating(Float.parseFloat(mMovie.getUserRating()));
 
         // For horizontal list of trailers
-//        LinearLayoutManager layoutManager
-//                = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-//        rvVideoList.setLayoutManager(layoutManager);
-//        mVideoAdapter = new VideoAdapter(new ArrayList<Video>(), (VideoAdapter.Callbacks) this);
-//        rvVideoList.setAdapter(mVideoAdapter);
-//        rvVideoList.setNestedScrollingEnabled(false);
-//
-//        // Fetch trailers only if savedInstanceState == null
-//        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_TRAILERS)) {
-//            List<Video> videos = savedInstanceState.getParcelableArrayList(EXTRA_TRAILERS);
-//            mVideoAdapter.addVideo(videos);
-//            mButtonWatchTrailer.setEnabled(true);
-//        } else {
-//            fetchTrailers(Long.parseLong(mMovie.getId()));
-//        }
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvVideoList.setLayoutManager(layoutManager);
+        mVideoAdapter = new VideoAdapter(new ArrayList<Video>(), this);
+        rvVideoList.setAdapter(mVideoAdapter);
+        rvVideoList.setNestedScrollingEnabled(false);
+
+        // Fetch trailers only if savedInstanceState == null
+        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_TRAILERS)) {
+            List<Video> videos = savedInstanceState.getParcelableArrayList(EXTRA_TRAILERS);
+            mVideoAdapter.addVideo(videos);
+            mButtonWatchTrailer.setEnabled(true);
+        } else {
+            fetchTrailers(Long.parseLong(mMovie.getId()));
+        }
 
         // For vertical list of reviews
-        mReviewAdapter = new ReviewAdapter(new ArrayList<Review>(), (ReviewAdapter.Callbacks) this);
-        rvReviews.setAdapter(mReviewAdapter);
-
-        // Fetch reviews only if savedInstanceState == null
-        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_REVIEWS)) {
-            List<Review> reviews = savedInstanceState.getParcelableArrayList(EXTRA_REVIEWS);
-            mReviewAdapter.add(reviews);
-        } else {
-            fetchReviews(Long.parseLong(mMovie.getId()));
-        }
+//        mReviewAdapter = new ReviewAdapter(new ArrayList<Review>(), (ReviewAdapter.Callbacks) this);
+//        rvReviews.setAdapter(mReviewAdapter);
+//
+//        // Fetch reviews only if savedInstanceState == null
+//        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_REVIEWS)) {
+//            List<Review> reviews = savedInstanceState.getParcelableArrayList(EXTRA_REVIEWS);
+//            mReviewAdapter.add(reviews);
+//        } else {
+//            fetchReviews(Long.parseLong(mMovie.getId()));
+//        }
 
         Picasso.with(this)
                 .load(mMovie.getPoster())
@@ -193,92 +195,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         });
     }
 
-    public static class VideoViewHolder extends RecyclerView.ViewHolder {
-        public final View vView;
-        @InjectView(R.id.trailer_thumbnail)
-        public ImageView ivThumbnailView;
-        public Video viVideo;
-
-        public VideoViewHolder(View vItemView) {
-            super(vItemView);
-            ButterKnife.inject(ivThumbnailView);
-            vView = vItemView;
-        }
-    }
-
-    public static class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
-        private ArrayList<Video> mVideoList;
-        private final Callbacks mCallbacks;
-        private LayoutInflater mInflater;
-        private Context mContext;
-
-        public interface Callbacks {
-            void watch(Video video, int position);
-        }
-
-        public VideoAdapter(ArrayList<Video> videos, Callbacks cb) {
-            mVideoList = videos;
-            mCallbacks = cb;
-        }
-
-        @Override
-        public VideoViewHolder onCreateViewHolder(ViewGroup parent, int nViewType) {
-            mInflater = LayoutInflater.from(parent.getContext());
-            View vView = mInflater.inflate(R.layout.trailer_list, parent, false);
-            final VideoViewHolder vvhViewHolder = new VideoViewHolder(vView);
-            return vvhViewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(final VideoViewHolder holder, final int position) {
-            final Video video = mVideoList.get(position);
-            mContext = holder.vView.getContext();
-
-            float paddingLeft = 0;
-            if (position == 0) {
-                paddingLeft = mContext.getResources().getDimension(R.dimen.detail_horizontal_padding);
-            }
-
-            float paddingRight = 0;
-            if (position + 1 != getItemCount()) {
-                paddingRight = mContext.getResources().getDimension(R.dimen.detail_horizontal_padding) / 2;
-            }
-
-            holder.vView.setPadding((int) paddingLeft, 0, (int) paddingRight, 0);
-
-            holder.viVideo = video;
-
-            String thumbnailUrl = "http://img.youtube.com/vi/" + video.getKey() + "/0.jpg";
-
-            Picasso.with(mContext)
-                    .load(thumbnailUrl)
-                    .config(Bitmap.Config.RGB_565)
-                    .into(holder.ivThumbnailView);
-
-            holder.vView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mCallbacks.watch(video, holder.getAdapterPosition());
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return (mVideoList == null) ? 0 : mVideoList.size();
-        }
-
-        public void addVideo(List<Video> mVideo) {
-            mVideoList.clear();
-            mVideoList.addAll(mVideo);
-            notifyDataSetChanged();
-        }
-
-        public void setVideoList(List<Video> mVideo) {
-            mVideoList.clear();
-            mVideoList.addAll(mVideo);
-            notifyDataSetChanged();
-        }
+    public void watch(Video video, int nPosition) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" +
+                video.getKey())));
     }
 
     public static class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
