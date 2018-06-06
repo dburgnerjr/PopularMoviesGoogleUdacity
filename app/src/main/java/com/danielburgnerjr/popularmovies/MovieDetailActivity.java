@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * Created by dburgnerjr on 6/5/17.
  */
 
-public class MovieDetailActivity extends AppCompatActivity implements VideoAdapter.Callbacks {
+public class MovieDetailActivity extends AppCompatActivity implements VideoAdapter.Callbacks, ReviewAdapter.Callbacks {
     public static final String EXTRA_MOVIE = "movie";
     public static final String EXTRA_TRAILERS = "trailer";
     public static final String EXTRA_REVIEWS = "review";
@@ -104,33 +104,33 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         rbRating.setRating(Float.parseFloat(mMovie.getUserRating()));
 
         // For horizontal list of trailers
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-        rvVideoList.setLayoutManager(layoutManager);
-        mVideoAdapter = new VideoAdapter(new ArrayList<Video>(), this);
-        rvVideoList.setAdapter(mVideoAdapter);
-        rvVideoList.setNestedScrollingEnabled(false);
-
-        // Fetch trailers only if savedInstanceState == null
-        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_TRAILERS)) {
-            List<Video> videos = savedInstanceState.getParcelableArrayList(EXTRA_TRAILERS);
-            mVideoAdapter.addVideo(videos);
-            mButtonWatchTrailer.setEnabled(true);
-        } else {
-            fetchTrailers(Long.parseLong(mMovie.getId()));
-        }
+//        LinearLayoutManager layoutManager
+//                = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+//        rvVideoList.setLayoutManager(layoutManager);
+//        mVideoAdapter = new VideoAdapter(new ArrayList<Video>(), this);
+//        rvVideoList.setAdapter(mVideoAdapter);
+//        rvVideoList.setNestedScrollingEnabled(false);
+//
+//        // Fetch trailers only if savedInstanceState == null
+//        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_TRAILERS)) {
+//            List<Video> videos = savedInstanceState.getParcelableArrayList(EXTRA_TRAILERS);
+//            mVideoAdapter.addVideo(videos);
+//            mButtonWatchTrailer.setEnabled(true);
+//        } else {
+//            fetchTrailers(Long.parseLong(mMovie.getId()));
+//        }
 
         // For vertical list of reviews
-//        mReviewAdapter = new ReviewAdapter(new ArrayList<Review>(), (ReviewAdapter.Callbacks) this);
-//        rvReviews.setAdapter(mReviewAdapter);
-//
-//        // Fetch reviews only if savedInstanceState == null
-//        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_REVIEWS)) {
-//            List<Review> reviews = savedInstanceState.getParcelableArrayList(EXTRA_REVIEWS);
-//            mReviewAdapter.add(reviews);
-//        } else {
-//            fetchReviews(Long.parseLong(mMovie.getId()));
-//        }
+        mReviewAdapter = new ReviewAdapter(new ArrayList<Review>(), (ReviewAdapter.Callbacks) this);
+        rvReviews.setAdapter(mReviewAdapter);
+
+        // Fetch reviews only if savedInstanceState == null
+        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_REVIEWS)) {
+            List<Review> reviews = savedInstanceState.getParcelableArrayList(EXTRA_REVIEWS);
+            mReviewAdapter.add(reviews);
+        } else {
+            fetchReviews(Long.parseLong(mMovie.getId()));
+        }
 
         Picasso.with(this)
                 .load(mMovie.getPoster())
@@ -200,77 +200,8 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
                 video.getKey())));
     }
 
-    public static class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
-
-        private final ArrayList<Review> mReviews;
-        private final Callbacks mCallbacks;
-
-        public ReviewAdapter(ArrayList<Review> reviews, Callbacks callbacks) {
-            mReviews = reviews;
-            mCallbacks = callbacks;
-        }
-
-        public interface Callbacks {
-            void read(Review review, int position);
-        }
-
-        @Override
-        public ReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.review_list, parent, false);
-            return new ReviewViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final ReviewViewHolder holder, final int position) {
-            final Review review = mReviews.get(position);
-
-            holder.mReview = review;
-            holder.mContentView.setText(review.getContent());
-            holder.mAuthorView.setText(review.getAuthor());
-
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mCallbacks.read(review, holder.getAdapterPosition());
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return mReviews.size();
-        }
-
-        public class ReviewViewHolder extends RecyclerView.ViewHolder {
-            public final View mView;
-            @InjectView(R.id.review_content)
-            TextView mContentView;
-            @InjectView(R.id.review_author)
-            TextView mAuthorView;
-            public Review mReview;
-
-            public ReviewViewHolder(View view) {
-                super(view);
-                ButterKnife.inject(this, view);
-                mView = view;
-            }
-        }
-
-        public void add(List<Review> reviews) {
-            mReviews.clear();
-            mReviews.addAll(reviews);
-            notifyDataSetChanged();
-        }
-
-        public void setReviews(List<Review> mReview) {
-            mReviews.clear();
-            mReviews.addAll(mReview);
-            notifyDataSetChanged();
-        }
-
-        public ArrayList<Review> getReviews() {
-            return mReviews;
-        }
+    @Override
+    public void read(Review review, int position) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(review.getUrl())));
     }
 }
