@@ -43,6 +43,7 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
 
     private Movie mMovie;
     private VideoAdapter mVideoAdapter;
+    private ArrayList<Review> alReviews;
     private ReviewAdapter mReviewAdapter;
 
     @InjectView(R.id.ivBackdrop)

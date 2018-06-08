@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         maAdapter = new MoviesAdapter(this);
         rvRecyclerView.setAdapter(maAdapter);
 
-        String[] strOptions = new String[] {"Popular Movies", "Top Rated Movies"};
+        String[] strOptions = new String[] {"Popular Movies", "Top Rated Movies", "Favorite Movies"};
 
         ArrayAdapter<String> arAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_spinner_dropdown_item, strOptions);
@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "Top Rated Movies":
                         getTopRatedMovies();
+                        break;
+                    case "Favorite Movies":
+                        getFavoriteMovies();
                         break;
                 }
             }
@@ -123,6 +126,10 @@ public class MainActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+    }
+
+    private void getFavoriteMovies() {
+
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
