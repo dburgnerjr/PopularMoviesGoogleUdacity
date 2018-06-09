@@ -72,12 +72,6 @@
                     android:textColor="@color/favoritesTextColor"
                     android:background="@color/favoritesBackground"
                     android:visibility="gone" />
-                <Button
-                    android:id="@+id/watch_trailer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:text="@string/watch_trailer" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

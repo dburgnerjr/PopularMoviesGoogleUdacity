@@ -66,8 +66,6 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
     TextView tvVideosHeading;
     @InjectView(R.id.video_list)
     RecyclerView rvVideoList;
-    @InjectView(R.id.watch_trailer)
-    Button mButtonWatchTrailer;
     @InjectView(R.id.reviews_heading)
     TextView tvReviewsHeading;
     @InjectView(R.id.reviews)
@@ -105,21 +103,20 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         rbRating.setRating(Float.parseFloat(mMovie.getUserRating()));
 
         // For horizontal list of trailers
-//        LinearLayoutManager layoutManager
-//                = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-//        rvVideoList.setLayoutManager(layoutManager);
-//        mVideoAdapter = new VideoAdapter(new ArrayList<Video>(), this);
-//        rvVideoList.setAdapter(mVideoAdapter);
-//        rvVideoList.setNestedScrollingEnabled(false);
-//
-//        // Fetch trailers only if savedInstanceState == null
-//        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_TRAILERS)) {
-//            List<Video> videos = savedInstanceState.getParcelableArrayList(EXTRA_TRAILERS);
-//            mVideoAdapter.addVideo(videos);
-//            mButtonWatchTrailer.setEnabled(true);
-//        } else {
-//            fetchTrailers(Long.parseLong(mMovie.getId()));
-//        }
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvVideoList.setLayoutManager(layoutManager);
+        mVideoAdapter = new VideoAdapter(new ArrayList<Video>(), this);
+        rvVideoList.setAdapter(mVideoAdapter);
+        rvVideoList.setNestedScrollingEnabled(false);
+
+        // Fetch trailers only if savedInstanceState == null
+        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_TRAILERS)) {
+            List<Video> videos = savedInstanceState.getParcelableArrayList(EXTRA_TRAILERS);
+            mVideoAdapter.addVideo(videos);
+        } else {
+            fetchTrailers(Long.parseLong(mMovie.getId()));
+        }
 
         // For vertical list of reviews
         LinearLayoutManager llmReviews

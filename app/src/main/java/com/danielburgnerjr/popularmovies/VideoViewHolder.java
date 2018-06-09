@@ -15,7 +15,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder {
 
     public VideoViewHolder(View vItemView) {
         super(vItemView);
-        ButterKnife.inject(ivThumbnailView);
+        ButterKnife.inject(this, vItemView);
         vView = vItemView;
     }
 }
