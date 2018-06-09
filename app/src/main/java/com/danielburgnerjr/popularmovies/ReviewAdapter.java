@@ -38,8 +38,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         final Review review = mReviews.get(position);
 
         holder.mReview = review;
-        holder.mContentView.setText(review.getContent());
         holder.mAuthorView.setText(review.getAuthor());
+        holder.mContentView.setText(review.getContent());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,10 +56,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
     public class ReviewViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        @InjectView(R.id.review_content)
-        TextView mContentView;
         @InjectView(R.id.review_author)
         TextView mAuthorView;
+        @InjectView(R.id.review_content)
+        TextView mContentView;
         public Review mReview;
 
         public ReviewViewHolder(View view) {

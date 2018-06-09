@@ -122,6 +122,9 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
 //        }
 
         // For vertical list of reviews
+        LinearLayoutManager llmReviews
+                = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        rvReviews.setLayoutManager(llmReviews);
         mReviewAdapter = new ReviewAdapter(new ArrayList<Review>(), (ReviewAdapter.Callbacks) this);
         rvReviews.setAdapter(mReviewAdapter);
 
