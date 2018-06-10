@@ -2,6 +2,8 @@ package com.danielburgnerjr.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @InjectView(R.id.spnMenuOptions)
     Spinner spnMenuOptions;
     private MoviesAdapter maAdapter;
+    private SQLiteDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +132,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getFavoriteMovies() {
+        Cursor cursor = mDb.query(PopularMoviesContract.PopularMoviesEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_VOTEAVERAGE);
 
+        //TODO Build the movie list from the stored Ids
+        List<Movie> result = new ArrayList<>();
+
+        try {
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID));
+
+                result.add(new Movie(
+                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID)),
+                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ORIGINALTITLE)),
+                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_OVERVIEW)),
+                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_POSTERPATH)),
+                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_RELEASEDATE)),
+                        cursor.getDouble(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_VOTEAVERAGE)),
+                        true));
+            }
+        } finally {
+            cursor.close();
+        }
+        maAdapter.setMovieList(result);
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {

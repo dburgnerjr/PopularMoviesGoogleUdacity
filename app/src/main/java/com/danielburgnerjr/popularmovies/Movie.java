@@ -32,10 +32,22 @@ public class Movie implements Parcelable {
     private String strReleaseDate;
 
     @SerializedName("vote_average")
-    private String strUserRating;
+    private double dUserRating;
+
+    private boolean isFavorite;
 
     public Movie() {}
 
+    public Movie(String id, String originalTitle, String overview,
+                     String posterPath, String releaseDate, double voteAverage, boolean isFavorite) {
+        this.strTitle = originalTitle;
+        this.strDescription = overview;
+        this.strPoster = posterPath;
+        this.strReleaseDate = releaseDate;
+        this.dUserRating = voteAverage;
+        this.strId = id;
+        this.isFavorite = isFavorite;
+    }
     protected Movie(Parcel in) {
         strId = in.readString();
         strTitle = in.readString();
@@ -43,7 +55,8 @@ public class Movie implements Parcelable {
         strDescription = in.readString();
         strBackdrop = in.readString();
         strReleaseDate = in.readString();
-        strUserRating = in.readString();
+        dUserRating = in.readDouble();
+        isFavorite = in.readByte() != 0;
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -102,12 +115,20 @@ public class Movie implements Parcelable {
         return strReleaseDate;
     }
 
-    public void setUserRating(String strUR) {
-        this.strUserRating = strUR;
+    public void setUserRating(double dUR) {
+        this.dUserRating = dUR;
     }
 
-    public String getUserRating() {
-        return strUserRating;
+    public double getUserRating() {
+        return dUserRating;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean bFavorite) {
+        isFavorite = bFavorite;
     }
 
     @Override
@@ -123,7 +144,8 @@ public class Movie implements Parcelable {
         parP.writeString(strDescription);
         parP.writeString(strBackdrop);
         parP.writeString(strReleaseDate);
-        parP.writeString(strUserRating);
+        parP.writeDouble(dUserRating);
+        parP.writeByte((byte) (isFavorite ? 1 : 0));
     }
 
     public static class MovieResult {
