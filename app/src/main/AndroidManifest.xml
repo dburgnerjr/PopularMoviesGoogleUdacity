@@ -22,6 +22,11 @@
             android:label="MovieDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <provider
+            android:authorities="com.danielburgnerjr.popularmovies"
+            android:name="com.danielburgnerjr.popularmovies.data.PopularMoviesContentProvider"
+            android:exported="false"
+            />
     </application>
 
 </manifest>

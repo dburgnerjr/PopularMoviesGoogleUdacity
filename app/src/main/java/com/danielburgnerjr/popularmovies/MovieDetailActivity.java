@@ -32,8 +32,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import com.squareup.picasso.Picasso;
-import com.danielburgnerjr.popularmovies.PopularMoviesContract;
-import com.danielburgnerjr.popularmovies.PopularMoviesDbHelper;
+import com.danielburgnerjr.popularmovies.data.PopularMoviesContract;
+import com.danielburgnerjr.popularmovies.data.PopularMoviesDbHelper;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -45,13 +45,12 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
     public static final String EXTRA_MOVIE = "movie";
     public static final String EXTRA_TRAILERS = "trailer";
     public static final String EXTRA_REVIEWS = "review";
+    public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
 
     private Movie mMovie;
     private VideoAdapter mVideoAdapter;
-    private ArrayList<Review> alReviews;
     private ReviewAdapter mReviewAdapter;
 
-    private boolean isFavorite;
     private SQLiteDatabase mDb;
 
     @InjectView(R.id.ivBackdrop)
@@ -125,6 +124,12 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         tvReleaseDate.setText(mMovie.getReleaseDate());
         rbRating.setRating((float)mMovie.getUserRating());
 
+        if (!mMovie.isFavorite()) {
+            mFavoriteButton.setText(R.string.favorite);
+        } else {
+            mFavoriteButton.setText(R.string.unfavorite);
+        }
+
         // For horizontal list of trailers
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -156,14 +161,16 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
             fetchReviews(Long.parseLong(mMovie.getId()));
         }
 
+        PopularMoviesDbHelper pmDbHelper = new PopularMoviesDbHelper(this);
+        mDb = pmDbHelper.getWritableDatabase();
+
         mFavoriteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(mMovie.isFavorite()) {
                     mMovie.setFavorite(false);
                     mFavoriteButton.setText(R.string.favorite);
                     removeFromFavorites();
-                }
-                else {
+                } else {
                     mMovie.setFavorite(true);
                     mFavoriteButton.setText(R.string.unfavorite);
                     addToFavorites();
@@ -173,12 +180,12 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         });
 
         Picasso.with(this)
-                .load(mMovie.getPoster())
+                .load(TMDB_IMAGE_PATH + mMovie.getPoster())
                 .placeholder(R.drawable.placeholder)   // optional
                 .error(R.drawable.error)
                 .into(ivPoster);
         Picasso.with(this)
-                .load(mMovie.getBackdrop())
+                .load(TMDB_IMAGE_PATH + mMovie.getBackdrop())
                 .placeholder(R.drawable.placeholder)   // optional
                 .error(R.drawable.error)
                 .into(ivBackdrop);
@@ -246,6 +253,7 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         cv.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ORIGINALTITLE, mMovie.getTitle());
         cv.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_OVERVIEW, mMovie.getDescription());
         cv.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_POSTERPATH, mMovie.getPoster());
+        cv.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_BACKDROP, mMovie.getBackdrop());
         cv.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_RELEASEDATE, mMovie.getReleaseDate());
         cv.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_VOTEAVERAGE, mMovie.getUserRating());
 

@@ -11,7 +11,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Movie implements Parcelable {
-    public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
 
     @SerializedName("id")
     private String strId;
@@ -34,19 +33,19 @@ public class Movie implements Parcelable {
     @SerializedName("vote_average")
     private double dUserRating;
 
-    private boolean isFavorite;
+    private boolean isFavorite = false;
 
     public Movie() {}
 
-    public Movie(String id, String originalTitle, String overview,
-                     String posterPath, String releaseDate, double voteAverage, boolean isFavorite) {
-        this.strTitle = originalTitle;
-        this.strDescription = overview;
-        this.strPoster = posterPath;
-        this.strReleaseDate = releaseDate;
-        this.dUserRating = voteAverage;
-        this.strId = id;
-        this.isFavorite = isFavorite;
+    public Movie(String strID, String strT, String strD, String strP, String strBD, String strRD, double dVA, boolean bF) {
+        this.strId = strID;
+        this.strTitle = strT;
+        this.strDescription = strD;
+        this.strPoster = strP;
+        this.strBackdrop = strBD;
+        this.strReleaseDate = strRD;
+        this.dUserRating = dVA;
+        this.isFavorite = bF;
     }
     protected Movie(Parcel in) {
         strId = in.readString();
@@ -84,7 +83,7 @@ public class Movie implements Parcelable {
     }
 
     public String getPoster() {
-        return TMDB_IMAGE_PATH + strPoster;
+        return strPoster;
     }
 
     public void setPoster(String strP) {
@@ -100,7 +99,7 @@ public class Movie implements Parcelable {
     }
 
     public String getBackdrop() {
-        return TMDB_IMAGE_PATH + strBackdrop;
+        return strBackdrop;
     }
 
     public void setBackdrop(String strB) {

@@ -1,14 +1,12 @@
-package com.danielburgnerjr.popularmovies;
+package com.danielburgnerjr.popularmovies.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class PopularMoviesDbHelper {
+public class PopularMoviesDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "popularmovie.db";
-    private static final int DATABASE_VERSION = 1;
-
-    public PopularMoviesDbHelper() {}
+    private static final int DATABASE_VERSION = 2;
 
     public PopularMoviesDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -19,13 +17,14 @@ public class PopularMoviesDbHelper {
         final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE " +
                 PopularMoviesContract.PopularMoviesEntry.TABLE_NAME + " (" +
                 //MovieContract.MovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID + " TEXT NOT NULL PRIMARY KEY, "  +
+                PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID + " TEXT NOT NULL PRIMARY KEY, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ORIGINALTITLE + " TEXT NOT NULL, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_OVERVIEW + " TEXT NOT NULL, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_POSTERPATH + " TEXT NOT NULL, " +
+                PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_BACKDROP + " TEXT NOT NULL, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_RELEASEDATE + " TEXT NOT NULL, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_VOTEAVERAGE + " TEXT NOT NULL, " +
-                PopularMoviesContract.PopularMoviesEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP "+
+                PopularMoviesContract.PopularMoviesEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP " +
                 ");";
 
         db.execSQL(SQL_CREATE_MOVIE_TABLE);

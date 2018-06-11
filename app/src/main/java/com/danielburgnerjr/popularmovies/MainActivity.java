@@ -19,6 +19,8 @@ import android.widget.Spinner;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.danielburgnerjr.popularmovies.data.PopularMoviesContract;
+import com.danielburgnerjr.popularmovies.data.PopularMoviesDbHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        PopularMoviesDbHelper pmDbHelper = new PopularMoviesDbHelper(this);
+        mDb = pmDbHelper.getWritableDatabase();
 
         ButterKnife.inject(this);
         rvRecyclerView.setHasFixedSize(true);
@@ -147,14 +152,17 @@ public class MainActivity extends AppCompatActivity {
             while (cursor.moveToNext()) {
                 String id = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID));
 
-                result.add(new Movie(
+                Movie movC = new Movie(
                         cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID)),
                         cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ORIGINALTITLE)),
                         cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_OVERVIEW)),
                         cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_POSTERPATH)),
+                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_BACKDROP)),
                         cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_RELEASEDATE)),
                         cursor.getDouble(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_VOTEAVERAGE)),
-                        true));
+                        true);
+                System.out.println(movC.getPoster() + " " + movC.getBackdrop());
+                result.add(movC);
             }
         } finally {
             cursor.close();
@@ -174,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         private List<Movie> mMovieList;
         private LayoutInflater mInflater;
         private Context mContext;
+        public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
 
         public MoviesAdapter(Context context) {
             this.mContext = context;
@@ -200,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(MovieViewHolder holder, int position) {
             Movie movie = mMovieList.get(position);
             Picasso.with(mContext)
-                    .load(movie.getPoster())
+                    .load(TMDB_IMAGE_PATH + movie.getPoster())
                     .placeholder(R.drawable.placeholder)   // optional
                     .error(R.drawable.error)
                     .into(holder.ivImageView);

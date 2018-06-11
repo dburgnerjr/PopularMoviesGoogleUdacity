@@ -1,4 +1,4 @@
-package com.danielburgnerjr.popularmovies;
+package com.danielburgnerjr.popularmovies.data;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -21,6 +21,7 @@ public final class PopularMoviesContract {
         public static final String COLUMN_NAME_ORIGINALTITLE = "originalTitle";
         public static final String COLUMN_NAME_OVERVIEW = "overview";
         public static final String COLUMN_NAME_POSTERPATH = "posterPath";
+        public static final String COLUMN_NAME_BACKDROP = "backdrop";
         public static final String COLUMN_NAME_RELEASEDATE = "releaseDate";
         public static final String COLUMN_NAME_VOTEAVERAGE = "voteAverage";
         public static final String COLUMN_TIMESTAMP ="timestamp";
