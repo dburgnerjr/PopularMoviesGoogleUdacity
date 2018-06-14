@@ -9,5 +9,11 @@
     <string name="favorite">Add to Favorites</string>
     <string name="unfavorite">Remove from Favorites</string>
     <string name="Data_Not_Found">Movie data is not available.</string>
-    <string name="api_key">INSERT API KEY HERE</string>
+    <string name="api_key">YOUR API KEY HERE</string>
+
+    <string-array name="sort_options">
+        <item>Popular Movies</item>
+        <item>Top Rated Movies</item>
+        <item>Favorite Movies</item>
+    </string-array>
 </resources>

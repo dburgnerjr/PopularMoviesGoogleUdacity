@@ -33,6 +33,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String CURRENT_RECYCLER_VIEW_POSITION = "CurrentRecyclerViewPosition";
     @InjectView(R.id.rvRecyclerView)
     RecyclerView rvRecyclerView;
     @InjectView(R.id.spnMenuOptions)
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         maAdapter = new MoviesAdapter(this);
         rvRecyclerView.setAdapter(maAdapter);
 
-        String[] strOptions = new String[] {"Popular Movies", "Top Rated Movies", "Favorite Movies"};
+        String[] strOptions = getResources().getStringArray(R.array.sort_options);
 
         ArrayAdapter<String> arAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_spinner_dropdown_item, strOptions);
@@ -66,14 +67,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                switch ((String)parent.getItemAtPosition(position)) {
-                    case "Popular Movies":
+                switch (position) {
+                    case 0:
                         getPopularMovies();
                         break;
-                    case "Top Rated Movies":
+                    case 1:
                         getTopRatedMovies();
                         break;
-                    case "Favorite Movies":
+                    case 2:
                         getFavoriteMovies();
                         break;
                 }
@@ -170,60 +171,20 @@ public class MainActivity extends AppCompatActivity {
         maAdapter.setMovieList(result);
     }
 
-    public static class MovieViewHolder extends RecyclerView.ViewHolder {
-        public ImageView ivImageView;
-        public MovieViewHolder(View vItemView) {
-            super(vItemView);
-            ivImageView = (ImageView) vItemView.findViewById(R.id.ivImageView);
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        GridLayoutManager layoutManager = (GridLayoutManager) rvRecyclerView.getLayoutManager();
+        outState.putInt(CURRENT_RECYCLER_VIEW_POSITION, layoutManager.findFirstVisibleItemPosition());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            int currentPosition = savedInstanceState.getInt(CURRENT_RECYCLER_VIEW_POSITION);
+            rvRecyclerView.scrollToPosition(currentPosition);
         }
     }
 
-    public static class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
-        private List<Movie> mMovieList;
-        private LayoutInflater mInflater;
-        private Context mContext;
-        public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
-
-        public MoviesAdapter(Context context) {
-            this.mContext = context;
-            this.mInflater = LayoutInflater.from(context);
-        }
-
-        @Override
-        public MovieViewHolder onCreateViewHolder(ViewGroup parent, int nViewType) {
-            View vView = mInflater.inflate(R.layout.movie_list, parent, false);
-            final MovieViewHolder mvhViewHolder = new MovieViewHolder(vView);
-            vView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View vView) {
-                    int nPosition = mvhViewHolder.getAdapterPosition();
-                    Intent intI = new Intent(mContext, MovieDetailActivity.class);
-                    intI.putExtra(MovieDetailActivity.EXTRA_MOVIE, mMovieList.get(nPosition));
-                    mContext.startActivity(intI);
-                }
-            });
-           return mvhViewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(MovieViewHolder holder, int position) {
-            Movie movie = mMovieList.get(position);
-            Picasso.with(mContext)
-                    .load(TMDB_IMAGE_PATH + movie.getPoster())
-                    .placeholder(R.drawable.placeholder)   // optional
-                    .error(R.drawable.error)
-                    .into(holder.ivImageView);
-        }
-
-        @Override
-        public int getItemCount() {
-            return (mMovieList == null) ? 0 : mMovieList.size();
-        }
-
-        public void setMovieList(List<Movie> mMovie) {
-            mMovieList = new ArrayList<Movie>();
-            mMovieList.addAll(mMovie);
-            notifyDataSetChanged();
-        }
-    }
 }
