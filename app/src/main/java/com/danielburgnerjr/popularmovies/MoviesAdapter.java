@@ -42,7 +42,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movie movie = mMovieList.get(position);
-        Picasso.with(mContext)
+        Picasso.get()
                 .load(TMDB_IMAGE_PATH + movie.getPoster())
                 .placeholder(R.drawable.placeholder)   // optional
                 .error(R.drawable.error)

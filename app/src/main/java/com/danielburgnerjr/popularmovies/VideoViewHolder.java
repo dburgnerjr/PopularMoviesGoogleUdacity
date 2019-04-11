@@ -5,17 +5,16 @@ import android.view.View;
 import android.widget.ImageView;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class VideoViewHolder extends RecyclerView.ViewHolder {
     public final View vView;
-    @InjectView(R.id.trailer_thumbnail)
     public ImageView ivThumbnailView;
     public Video viVideo;
 
     public VideoViewHolder(View vItemView) {
         super(vItemView);
-        ButterKnife.inject(this, vItemView);
+        ivThumbnailView = vItemView.findViewById(R.id.trailer_thumbnail);
+        ButterKnife.bind(this, vItemView);
         vView = vItemView;
     }
 }

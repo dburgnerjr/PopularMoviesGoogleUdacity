@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
     private ArrayList<Video> mVideoList;
@@ -60,7 +59,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
 
         String thumbnailUrl = "http://img.youtube.com/vi/" + video.getKey() + "/0.jpg";
 
-        Picasso.with(mContext)
+        Picasso.get()
                 .load(thumbnailUrl)
                 .config(Bitmap.Config.RGB_565)
                 .into(holder.ivThumbnailView);

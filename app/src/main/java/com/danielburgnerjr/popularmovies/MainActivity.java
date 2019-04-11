@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 import com.danielburgnerjr.popularmovies.data.PopularMoviesContract;
 import com.danielburgnerjr.popularmovies.data.PopularMoviesDbHelper;
@@ -34,9 +33,7 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_RECYCLER_VIEW_POSITION = "CurrentRecyclerViewPosition";
-    @InjectView(R.id.rvRecyclerView)
     RecyclerView rvRecyclerView;
-    @InjectView(R.id.spnMenuOptions)
     Spinner spnMenuOptions;
     private MoviesAdapter maAdapter;
     private SQLiteDatabase mDb;
@@ -49,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
         PopularMoviesDbHelper pmDbHelper = new PopularMoviesDbHelper(this);
         mDb = pmDbHelper.getWritableDatabase();
 
-        ButterKnife.inject(this);
+        rvRecyclerView = (RecyclerView) findViewById(R.id.rvRecyclerView);
+        spnMenuOptions = (Spinner) findViewById(R.id.spnMenuOptions);
+
+        ButterKnife.bind(this);
         rvRecyclerView.setHasFixedSize(true);
         rvRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         rvRecyclerView.getLayoutManager().setMeasurementCacheEnabled(false);

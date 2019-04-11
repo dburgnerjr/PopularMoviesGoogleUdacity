@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -53,32 +53,19 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
 
     private SQLiteDatabase mDb;
 
-    @InjectView(R.id.ivBackdrop)
     ImageView ivBackdrop;
-    @InjectView(R.id.movie_poster)
     ImageView ivPoster;
-    @InjectView(R.id.movie_description_heading)
     TextView tvDescriptionHeading;
-    @InjectView(R.id.movie_description)
     TextView tvDescription;
-    @InjectView(R.id.release_date_heading)
     TextView tvReleaseDateHeading;
-    @InjectView(R.id.release_date)
     TextView tvReleaseDate;
-    @InjectView(R.id.rating_heading)
     TextView tvRatingHeading;
-    @InjectView(R.id.rating)
     RatingBar rbRating;
-    @InjectView(R.id.videos_heading)
     TextView tvVideosHeading;
-    @InjectView(R.id.video_list)
     RecyclerView rvVideoList;
-    @InjectView(R.id.reviews_heading)
     TextView tvReviewsHeading;
-    @InjectView(R.id.reviews)
     RecyclerView rvReviews;
 
-    @InjectView(R.id.favorite_button)
     Button mFavoriteButton;
 
     @Override
@@ -108,6 +95,20 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
             throw new IllegalArgumentException("Detail activity must receive a movie parcelable");
         }
 
+        ivBackdrop = (ImageView) findViewById(R.id.ivBackdrop);
+        ivPoster = (ImageView) findViewById(R.id.movie_poster);
+        tvDescriptionHeading = (TextView) findViewById(R.id.movie_description_heading);
+        tvDescription = (TextView) findViewById(R.id.movie_description);
+        tvReleaseDateHeading = (TextView) findViewById(R.id.release_date_heading);
+        tvReleaseDate = (TextView) findViewById(R.id.release_date);
+        tvRatingHeading = (TextView) findViewById(R.id.rating_heading);
+        rbRating = (RatingBar) findViewById(R.id.rating);
+        tvVideosHeading = (TextView) findViewById(R.id.videos_heading);
+        rvVideoList = (RecyclerView) findViewById(R.id.video_list);
+        tvReviewsHeading = (TextView) findViewById(R.id.reviews_heading);
+        rvReviews = (RecyclerView) findViewById(R.id.reviews);
+        mFavoriteButton = (Button) findViewById(R.id.favorite_button);
+
         Toolbar tbToolbar = (Toolbar) findViewById(R.id.tbToolbar);
         setSupportActionBar(tbToolbar);
         CollapsingToolbarLayout ctlToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -118,7 +119,7 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         LinearLayout llMovieLayout = new LinearLayout(getApplicationContext());
         llMovieLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         tvDescription.setText(mMovie.getDescription());
         tvReleaseDate.setText(mMovie.getReleaseDate());
@@ -179,12 +180,12 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
             }
         });
 
-        Picasso.with(this)
+        Picasso.get()
                 .load(TMDB_IMAGE_PATH + mMovie.getPoster())
                 .placeholder(R.drawable.placeholder)   // optional
                 .error(R.drawable.error)
                 .into(ivPoster);
-        Picasso.with(this)
+        Picasso.get()
                 .load(TMDB_IMAGE_PATH + mMovie.getBackdrop())
                 .placeholder(R.drawable.placeholder)   // optional
                 .error(R.drawable.error)

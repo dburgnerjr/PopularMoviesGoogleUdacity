@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
 
@@ -56,15 +55,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
     public class ReviewViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        @InjectView(R.id.review_author)
         TextView mAuthorView;
-        @InjectView(R.id.review_content)
         TextView mContentView;
         public Review mReview;
 
         public ReviewViewHolder(View view) {
             super(view);
-            ButterKnife.inject(this, view);
+            mAuthorView = (TextView) view.findViewById(R.id.review_author);
+            mContentView = (TextView) view.findViewById(R.id.review_content);
+            ButterKnife.bind(this, view);
             mView = view;
         }
     }
