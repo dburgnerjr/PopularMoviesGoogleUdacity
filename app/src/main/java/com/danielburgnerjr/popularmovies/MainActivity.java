@@ -22,6 +22,9 @@ import com.danielburgnerjr.popularmovies.data.PopularMoviesContract;
 import com.danielburgnerjr.popularmovies.data.PopularMoviesDbHelper;
 import com.squareup.picasso.Picasso;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         PopularMoviesDbHelper pmDbHelper = new PopularMoviesDbHelper(this);
         mDb = pmDbHelper.getWritableDatabase();

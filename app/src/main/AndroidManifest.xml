@@ -25,8 +25,10 @@
         <provider
             android:authorities="com.danielburgnerjr.popularmovies"
             android:name="com.danielburgnerjr.popularmovies.data.PopularMoviesContentProvider"
-            android:exported="false"
-            />
+            android:exported="false" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8379108590476103~9690220517"/>
     </application>
 
 </manifest>

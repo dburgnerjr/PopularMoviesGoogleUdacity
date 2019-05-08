@@ -10,6 +10,8 @@
     <string name="unfavorite">Remove from Favorites</string>
     <string name="Data_Not_Found">Movie data is not available.</string>
     <string name="api_key">8a6f42fe5f7efc6139cda365db5c89a1</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
 
     <string-array name="sort_options">
         <item>Popular Movies</item>
