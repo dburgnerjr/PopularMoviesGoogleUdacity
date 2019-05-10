@@ -27,6 +27,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import com.google.android.gms.ads.MobileAds;
 import com.squareup.picasso.Picasso;
 import com.danielburgnerjr.popularmovies.data.PopularMoviesContract;
 import com.danielburgnerjr.popularmovies.data.PopularMoviesDbHelper;
@@ -51,6 +52,7 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
     private ReviewAdapter mReviewAdapter;
 
     private SQLiteDatabase mDb;
+    private AdView mAdView;
 
     ImageView ivBackdrop;
     ImageView ivPoster;
@@ -71,7 +73,8 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        AdView mAdView = findViewById(R.id.adView);
+        MobileAds.initialize(this, String.valueOf(R.string.admob_app_id));
+        mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 

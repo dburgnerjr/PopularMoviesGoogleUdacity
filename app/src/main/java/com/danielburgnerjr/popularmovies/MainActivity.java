@@ -1,29 +1,24 @@
 package com.danielburgnerjr.popularmovies;
 
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
 import butterknife.ButterKnife;
 
 import com.danielburgnerjr.popularmovies.data.PopularMoviesContract;
 import com.danielburgnerjr.popularmovies.data.PopularMoviesDbHelper;
-import com.squareup.picasso.Picasso;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
     Spinner spnMenuOptions;
     private MoviesAdapter maAdapter;
     private SQLiteDatabase mDb;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AdView mAdView = findViewById(R.id.adView);
+        MobileAds.initialize(this, String.valueOf(R.string.admob_app_id));
+        mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -65,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         String[] strOptions = getResources().getStringArray(R.array.sort_options);
 
         ArrayAdapter<String> arAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_dropdown_item, strOptions);
+                (this, R.layout.spinner_item, strOptions);
 
         spnMenuOptions.setAdapter(arAdapter);
 
