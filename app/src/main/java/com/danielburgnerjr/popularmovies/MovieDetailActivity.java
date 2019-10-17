@@ -27,16 +27,18 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import com.google.android.gms.ads.MobileAds;
-import com.squareup.picasso.Picasso;
 import com.danielburgnerjr.popularmovies.data.PopularMoviesContract;
 import com.danielburgnerjr.popularmovies.data.PopularMoviesDbHelper;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import java.util.ArrayList;
+
 /**
  * Created by dburgnerjr on 6/5/17.
  */
@@ -268,8 +270,9 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
 
     private void removeFromFavorites() {
         Uri uri = PopularMoviesContract.PopularMoviesEntry.CONTENT_URI;
-        uri = uri.buildUpon().appendPath(mMovie.getId().toString()).build();
-        int rowCount = getContentResolver().delete(uri, null, null);    }
+        uri = uri.buildUpon().appendPath(mMovie.getId()).build();
+        int rowCount = getContentResolver().delete(uri, null, null);
+    }
 
     public void watch(Video video, int nPosition) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" +

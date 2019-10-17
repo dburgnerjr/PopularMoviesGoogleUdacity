@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class PopularMoviesDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "popularmovie.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public PopularMoviesDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -21,7 +21,7 @@ public class PopularMoviesDbHelper extends SQLiteOpenHelper {
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ORIGINALTITLE + " TEXT NOT NULL, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_OVERVIEW + " TEXT NOT NULL, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_POSTERPATH + " TEXT NOT NULL, " +
-                PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_BACKDROP + " TEXT NOT NULL, " +
+                PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_BACKDROP + " TEXT, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_RELEASEDATE + " TEXT NOT NULL, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_VOTEAVERAGE + " TEXT NOT NULL, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP " +
