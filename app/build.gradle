@@ -24,10 +24,10 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
-    implementation 'com.google.android.gms:play-services-ads:18.2.0'
+    implementation 'com.google.android.gms:play-services-ads:18.3.0'
     annotationProcessor 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.squareup.retrofit:retrofit:1.9.0'
     implementation 'com.squareup.picasso:picasso:2.71828'

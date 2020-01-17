@@ -16,7 +16,6 @@ public class PopularMoviesDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE " +
                 PopularMoviesContract.PopularMoviesEntry.TABLE_NAME + " (" +
-                //MovieContract.MovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID + " TEXT NOT NULL PRIMARY KEY, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ORIGINALTITLE + " TEXT NOT NULL, " +
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_OVERVIEW + " TEXT NOT NULL, " +
@@ -36,5 +35,4 @@ public class PopularMoviesDbHelper extends SQLiteOpenHelper {
         onCreate(db);
 
     }
-
 }

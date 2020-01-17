@@ -3,6 +3,7 @@ package com.danielburgnerjr.popularmovies.data;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,6 +16,7 @@ public class PopularMoviesContentProvider extends ContentProvider {
     public static final int MOVIES = 100;
     public static final int MOVIE_ID = 101;
     private static final UriMatcher sUriMatcher = buildUriMatcher();
+    Context context;
 
     PopularMoviesDbHelper movieDbHelper;
 
@@ -29,6 +31,8 @@ public class PopularMoviesContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         movieDbHelper = new PopularMoviesDbHelper(getContext());
+        context = getContext();
+
         return true;
     }
 
@@ -40,21 +44,19 @@ public class PopularMoviesContentProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
         Cursor retCursor;
 
-        switch (match) {
-                case MOVIES:
-                    retCursor = db.query(PopularMoviesContract.PopularMoviesEntry.TABLE_NAME,
-                            null,
-                            null,
-                            null,
-                            null,
-                            null,
-                            PopularMoviesContract.PopularMoviesEntry.COLUMN_TIMESTAMP);
-                    break;
-                default:
-                    throw new UnsupportedOperationException("Unknown uri: " + uri);
+        if (match == MOVIES) {
+            retCursor = db.query(PopularMoviesContract.PopularMoviesEntry.TABLE_NAME,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    PopularMoviesContract.PopularMoviesEntry.COLUMN_TIMESTAMP);
+        } else {
+            throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
 
+        retCursor.setNotificationUri(context.getContentResolver(), uri);
         return retCursor;
     }
 
@@ -70,19 +72,17 @@ public class PopularMoviesContentProvider extends ContentProvider {
         final SQLiteDatabase db = movieDbHelper.getWritableDatabase();
         int match = sUriMatcher.match(uri);
         Uri returnUri;
-        switch (match) {
-                case MOVIES:
-                    long id = db.insert(PopularMoviesContract.PopularMoviesEntry.TABLE_NAME, null, values);
-                    if (id > 0) {
-                        returnUri = ContentUris.withAppendedId(PopularMoviesContract.PopularMoviesEntry.CONTENT_URI, id);
-                    } else {
-                        throw new android.database.SQLException("Failed to insert row into " + uri);
-                    }
-                    break;
-                default:
-                    throw new UnsupportedOperationException("Unknown uri: " + uri);
+        if (match == MOVIES) {
+            long id = db.insert(PopularMoviesContract.PopularMoviesEntry.TABLE_NAME, null, values);
+            if (id > 0) {
+                returnUri = ContentUris.withAppendedId(PopularMoviesContract.PopularMoviesEntry.CONTENT_URI, id);
+            } else {
+                throw new android.database.SQLException("Failed to insert row into " + uri);
+            }
+        } else {
+            throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-        getContext().getContentResolver().notifyChange(uri, null);
+        context.getContentResolver().notifyChange(uri, null);
         return returnUri;
     }
 
@@ -92,17 +92,15 @@ public class PopularMoviesContentProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
         int moviesDeleted; // starts as 0
 
-        switch (match) {
-                case MOVIE_ID:
-                    String id = uri.getPathSegments().get(1);
-                    moviesDeleted = db.delete(PopularMoviesContract.PopularMoviesEntry.TABLE_NAME, "id=?", new String[]{id});
-                    break;
-                default:
-                    throw new UnsupportedOperationException("Unknown uri: " + uri);
+        if (match == MOVIE_ID) {
+            String id = uri.getPathSegments().get(1);
+            moviesDeleted = db.delete(PopularMoviesContract.PopularMoviesEntry.TABLE_NAME, "id=?", new String[]{id});
+        } else {
+            throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
         if (moviesDeleted != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            context.getContentResolver().notifyChange(uri, null);
         }
         return moviesDeleted;
     }
