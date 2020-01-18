@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 
 @SuppressWarnings("WeakerAccess")
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
-
     private final ArrayList<Review> mReviews;
     private final Callbacks mCallbacks;
 
@@ -81,9 +80,5 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         mReviews.clear();
         mReviews.addAll(mReview);
         notifyDataSetChanged();
-    }
-
-    public ArrayList<Review> getReviews() {
-        return mReviews;
     }
 }

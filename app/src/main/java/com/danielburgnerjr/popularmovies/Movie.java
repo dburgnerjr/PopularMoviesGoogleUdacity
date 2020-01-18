@@ -35,9 +35,7 @@ public class Movie implements Parcelable {
     @SerializedName("vote_average")
     private double dUserRating;
 
-    private boolean isFavorite = false;
-
-    public Movie() {}
+    private boolean isFavorite;
 
     public Movie(String strID, String strT, String strD, String strP, String strBD, String strRD, double dVA, boolean bF) {
         this.strId = strID;
@@ -80,44 +78,20 @@ public class Movie implements Parcelable {
         return strTitle;
     }
 
-    public void setTitle(String strT) {
-        this.strTitle = strT;
-    }
-
     public String getPoster() {
         return strPoster;
-    }
-
-    public void setPoster(String strP) {
-        this.strPoster = strP;
     }
 
     public String getDescription() {
         return strDescription;
     }
 
-    public void setDescription(String strD) {
-        this.strDescription = strD;
-    }
-
     public String getBackdrop() {
         return strBackdrop;
     }
 
-    public void setBackdrop(String strB) {
-        this.strBackdrop = strB;
-    }
-
-    public void setReleaseDate(String strRD) {
-        this.strReleaseDate = strRD;
-    }
-
     public String getReleaseDate() {
         return strReleaseDate;
-    }
-
-    public void setUserRating(double dUR) {
-        this.dUserRating = dUR;
     }
 
     public double getUserRating() {
@@ -155,10 +129,6 @@ public class Movie implements Parcelable {
 
         public List<Movie> getResults() {
             return mResults;
-        }
-
-        public int getSize() {
-            return mResults.size();
         }
     }
 }

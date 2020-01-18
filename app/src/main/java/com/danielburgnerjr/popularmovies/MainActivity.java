@@ -57,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         rvRecyclerView.setHasFixedSize(true);
         rvRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        rvRecyclerView.getLayoutManager().setMeasurementCacheEnabled(false);
+        if (rvRecyclerView.getLayoutManager() != null)
+            rvRecyclerView.getLayoutManager().setMeasurementCacheEnabled(false);
         maAdapter = new MoviesAdapter(this);
         rvRecyclerView.setAdapter(maAdapter);
 
@@ -86,9 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
 
@@ -154,8 +153,6 @@ public class MainActivity extends AppCompatActivity {
         List<Movie> result = new ArrayList<>();
 
         while (cursor.moveToNext()) {
-            String id = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID));
-
             Movie movC = new Movie(
                     cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID)),
                     cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ORIGINALTITLE)),
@@ -177,7 +174,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         GridLayoutManager layoutManager = (GridLayoutManager) rvRecyclerView.getLayoutManager();
-        outState.putInt(CURRENT_RECYCLER_VIEW_POSITION, layoutManager.findFirstVisibleItemPosition());
+        if(layoutManager != null)
+            outState.putInt(CURRENT_RECYCLER_VIEW_POSITION, layoutManager.findFirstVisibleItemPosition());
     }
 
     @Override

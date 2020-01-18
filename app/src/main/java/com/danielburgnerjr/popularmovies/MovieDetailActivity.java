@@ -177,11 +177,17 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
                 if(mMovie.isFavorite()) {
                     mMovie.setFavorite(false);
                     mFavoriteButton.setText(R.string.favorite);
-                    removeFromFavorites();
+                    if (removeFromFavorites() != 0)
+                        Toast.makeText(MovieDetailActivity.this, "This movie was successfully removed from your favorites.", Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(MovieDetailActivity.this, "This movie was unsuccessfully removed from your favorites.", Toast.LENGTH_LONG).show();
                 } else {
                     mMovie.setFavorite(true);
                     mFavoriteButton.setText(R.string.unfavorite);
-                    addToFavorites();
+                    if (addToFavorites() != 0)
+                        Toast.makeText(MovieDetailActivity.this, "This movie was successfully added to your favorites.", Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(MovieDetailActivity.this, "This movie was unsuccessfully added to your favorites.", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -255,7 +261,7 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    private void addToFavorites() {
+    private long addToFavorites() {
         ContentValues cv = new ContentValues();
         cv.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID, mMovie.getId());
         cv.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ORIGINALTITLE, mMovie.getTitle());
@@ -265,13 +271,13 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         cv.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_RELEASEDATE, mMovie.getReleaseDate());
         cv.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_VOTEAVERAGE, mMovie.getUserRating());
 
-        long rowCount = mDb.insert(PopularMoviesContract.PopularMoviesEntry.TABLE_NAME, null, cv);
+        return mDb.insert(PopularMoviesContract.PopularMoviesEntry.TABLE_NAME, null, cv);
     }
 
-    private void removeFromFavorites() {
+    private int removeFromFavorites() {
         Uri uri = PopularMoviesContract.PopularMoviesEntry.CONTENT_URI;
         uri = uri.buildUpon().appendPath(mMovie.getId()).build();
-        int rowCount = getContentResolver().delete(uri, null, null);
+        return getContentResolver().delete(uri, null, null);
     }
 
     public void watch(Video video, int nPosition) {
