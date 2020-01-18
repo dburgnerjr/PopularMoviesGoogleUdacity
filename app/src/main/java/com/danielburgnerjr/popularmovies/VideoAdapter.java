@@ -2,6 +2,8 @@ package com.danielburgnerjr.popularmovies;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +14,12 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("WeakerAccess")
 public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
     private ArrayList<Video> mVideoList;
     private Callbacks mCallbacks;
-    private LayoutInflater mInflater;
-    private Context mContext;
+    LayoutInflater mInflater;
+    Context mContext;
 
     public interface Callbacks {
         void watch(Video video, int position);
@@ -28,11 +31,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
     }
 
     @Override
+    @NonNull
     public VideoViewHolder onCreateViewHolder(ViewGroup parent, int nViewType) {
         mInflater = LayoutInflater.from(parent.getContext());
         View vView = mInflater.inflate(R.layout.trailer_list, parent, false);
-        final VideoViewHolder vvhViewHolder = new VideoViewHolder(vView);
-        return vvhViewHolder;
+        return new VideoViewHolder(vView);
     }
 
     @Override

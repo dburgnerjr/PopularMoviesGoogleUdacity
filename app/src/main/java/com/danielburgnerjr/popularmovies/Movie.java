@@ -1,6 +1,6 @@
 package com.danielburgnerjr.popularmovies;
 
-/**
+/*
  * Created by dburgnerjr on 5/5/18.
  */
 import android.os.Parcel;
@@ -8,8 +8,10 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("WeakerAccess")
 public class Movie implements Parcelable {
 
     @SerializedName("id")
@@ -149,7 +151,7 @@ public class Movie implements Parcelable {
 
     public static class MovieResult {
         @SerializedName("results")
-        private List<Movie> mResults;
+        private List<Movie> mResults = new ArrayList<>();
 
         public List<Movie> getResults() {
             return mResults;

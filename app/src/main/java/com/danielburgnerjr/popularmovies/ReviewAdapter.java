@@ -1,5 +1,6 @@
 package com.danielburgnerjr.popularmovies;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
+@SuppressWarnings("WeakerAccess")
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
 
     private final ArrayList<Review> mReviews;
@@ -26,6 +28,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     }
 
     @Override
+    @NonNull
     public ReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.review_list, parent, false);
@@ -61,8 +64,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
         public ReviewViewHolder(View view) {
             super(view);
-            mAuthorView = (TextView) view.findViewById(R.id.review_author);
-            mContentView = (TextView) view.findViewById(R.id.review_content);
+            mAuthorView = view.findViewById(R.id.review_author);
+            mContentView = view.findViewById(R.id.review_content);
             ButterKnife.bind(this, view);
             mView = view;
         }

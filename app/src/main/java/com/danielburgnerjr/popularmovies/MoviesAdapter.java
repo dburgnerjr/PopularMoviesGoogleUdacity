@@ -2,6 +2,8 @@ package com.danielburgnerjr.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("WeakerAccess")
 public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     private List<Movie> mMovieList;
     private LayoutInflater mInflater;
@@ -24,7 +27,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     }
 
     @Override
-    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int nViewType) {
+    @NonNull
+    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int nViewType) {
         View vView = mInflater.inflate(R.layout.movie_list, parent, false);
         final MovieViewHolder mvhViewHolder = new MovieViewHolder(vView);
         vView.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +59,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     }
 
     public void setMovieList(List<Movie> mMovie) {
-        mMovieList = new ArrayList<Movie>();
+        mMovieList = new ArrayList<>();
         mMovieList.addAll(mMovie);
         notifyDataSetChanged();
     }

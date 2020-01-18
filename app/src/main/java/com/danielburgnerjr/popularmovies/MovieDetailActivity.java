@@ -54,7 +54,7 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
     private ReviewAdapter mReviewAdapter;
 
     private SQLiteDatabase mDb;
-    private AdView mAdView;
+    AdView mAdView;
 
     ImageView ivBackdrop;
     ImageView ivPoster;
@@ -102,23 +102,23 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
             throw new IllegalArgumentException("Detail activity must receive a movie parcelable");
         }
 
-        ivBackdrop = (ImageView) findViewById(R.id.ivBackdrop);
-        ivPoster = (ImageView) findViewById(R.id.movie_poster);
-        tvDescriptionHeading = (TextView) findViewById(R.id.movie_description_heading);
-        tvDescription = (TextView) findViewById(R.id.movie_description);
-        tvReleaseDateHeading = (TextView) findViewById(R.id.release_date_heading);
-        tvReleaseDate = (TextView) findViewById(R.id.release_date);
-        tvRatingHeading = (TextView) findViewById(R.id.rating_heading);
-        rbRating = (RatingBar) findViewById(R.id.rating);
-        tvVideosHeading = (TextView) findViewById(R.id.videos_heading);
-        rvVideoList = (RecyclerView) findViewById(R.id.video_list);
-        tvReviewsHeading = (TextView) findViewById(R.id.reviews_heading);
-        rvReviews = (RecyclerView) findViewById(R.id.reviews);
-        mFavoriteButton = (Button) findViewById(R.id.favorite_button);
+        ivBackdrop = findViewById(R.id.ivBackdrop);
+        ivPoster = findViewById(R.id.movie_poster);
+        tvDescriptionHeading = findViewById(R.id.movie_description_heading);
+        tvDescription = findViewById(R.id.movie_description);
+        tvReleaseDateHeading = findViewById(R.id.release_date_heading);
+        tvReleaseDate = findViewById(R.id.release_date);
+        tvRatingHeading = findViewById(R.id.rating_heading);
+        rbRating = findViewById(R.id.rating);
+        tvVideosHeading = findViewById(R.id.videos_heading);
+        rvVideoList = findViewById(R.id.video_list);
+        tvReviewsHeading = findViewById(R.id.reviews_heading);
+        rvReviews = findViewById(R.id.reviews);
+        mFavoriteButton = findViewById(R.id.favorite_button);
 
-        Toolbar tbToolbar = (Toolbar) findViewById(R.id.tbToolbar);
+        Toolbar tbToolbar = findViewById(R.id.tbToolbar);
         setSupportActionBar(tbToolbar);
-        CollapsingToolbarLayout ctlToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        CollapsingToolbarLayout ctlToolbarLayout = findViewById(R.id.toolbar_layout);
         ctlToolbarLayout.setTitle(mMovie.getTitle());
         ctlToolbarLayout.setExpandedTitleColor(Color.WHITE);
         ctlToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
@@ -158,7 +158,7 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         LinearLayoutManager llmReviews
                 = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         rvReviews.setLayoutManager(llmReviews);
-        mReviewAdapter = new ReviewAdapter(new ArrayList<Review>(), (ReviewAdapter.Callbacks) this);
+        mReviewAdapter = new ReviewAdapter(new ArrayList<Review>(), this);
         rvReviews.setAdapter(mReviewAdapter);
 
         // Fetch reviews only if savedInstanceState == null

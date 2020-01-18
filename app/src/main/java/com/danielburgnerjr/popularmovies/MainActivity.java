@@ -3,6 +3,8 @@ package com.danielburgnerjr.popularmovies;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spnMenuOptions;
     private MoviesAdapter maAdapter;
     private SQLiteDatabase mDb;
-    private AdView mAdView;
+    AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         PopularMoviesDbHelper pmDbHelper = new PopularMoviesDbHelper(this);
         mDb = pmDbHelper.getWritableDatabase();
 
-        rvRecyclerView = (RecyclerView) findViewById(R.id.rvRecyclerView);
-        spnMenuOptions = (Spinner) findViewById(R.id.spnMenuOptions);
+        rvRecyclerView = findViewById(R.id.rvRecyclerView);
+        spnMenuOptions = findViewById(R.id.spnMenuOptions);
 
         ButterKnife.bind(this);
         rvRecyclerView.setHasFixedSize(true);
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         String[] strOptions = getResources().getStringArray(R.array.sort_options);
 
-        ArrayAdapter<String> arAdapter = new ArrayAdapter<String>
+        ArrayAdapter<String> arAdapter = new ArrayAdapter<>
                 (this, R.layout.spinner_item, strOptions);
 
         spnMenuOptions.setAdapter(arAdapter);
@@ -149,45 +151,40 @@ public class MainActivity extends AppCompatActivity {
                 null,
                 PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_VOTEAVERAGE);
 
-        //TODO Build the movie list from the stored Ids
         List<Movie> result = new ArrayList<>();
 
-        try {
-            while (cursor.moveToNext()) {
-                String id = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID));
+        while (cursor.moveToNext()) {
+            String id = cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID));
 
-                Movie movC = new Movie(
-                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID)),
-                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ORIGINALTITLE)),
-                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_OVERVIEW)),
-                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_POSTERPATH)),
-                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_BACKDROP)),
-                        cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_RELEASEDATE)),
-                        cursor.getDouble(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_VOTEAVERAGE)),
-                        true);
-                System.out.println(movC.getPoster() + " " + movC.getBackdrop());
-                result.add(movC);
-            }
-        } finally {
-            cursor.close();
+            Movie movC = new Movie(
+                    cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ID)),
+                    cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_ORIGINALTITLE)),
+                    cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_OVERVIEW)),
+                    cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_POSTERPATH)),
+                    cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_BACKDROP)),
+                    cursor.getString(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_RELEASEDATE)),
+                    cursor.getDouble(cursor.getColumnIndex(PopularMoviesContract.PopularMoviesEntry.COLUMN_NAME_VOTEAVERAGE)),
+                    true);
+            System.out.println(movC.getPoster() + " " + movC.getBackdrop());
+            result.add(movC);
         }
+        cursor.close();
+
         maAdapter.setMovieList(result);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         GridLayoutManager layoutManager = (GridLayoutManager) rvRecyclerView.getLayoutManager();
         outState.putInt(CURRENT_RECYCLER_VIEW_POSITION, layoutManager.findFirstVisibleItemPosition());
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState != null) {
-            int currentPosition = savedInstanceState.getInt(CURRENT_RECYCLER_VIEW_POSITION);
-            rvRecyclerView.scrollToPosition(currentPosition);
-        }
+        int currentPosition = savedInstanceState.getInt(CURRENT_RECYCLER_VIEW_POSITION);
+        rvRecyclerView.scrollToPosition(currentPosition);
     }
 
 }

@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("WeakerAccess")
 public class Video implements Parcelable {
 
     public static final String LOG_TAG = Video.class.getSimpleName();

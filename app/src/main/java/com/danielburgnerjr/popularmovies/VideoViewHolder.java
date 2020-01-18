@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import butterknife.ButterKnife;
 
+@SuppressWarnings("WeakerAccess")
 public class VideoViewHolder extends RecyclerView.ViewHolder {
     public final View vView;
     public ImageView ivThumbnailView;
