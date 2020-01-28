@@ -6,6 +6,10 @@
     <string name="rating_title">User Rating</string>
     <string name="videos_title">Trailers</string>
     <string name="reviews_title">Reviews</string>
+    <string name="backdrop">Backdrop</string>
+    <string name="poster">Poster</string>
+    <string name="play">Play</string>
+    <string name="trailer">Trailer</string>
     <string name="favorite">Add to Favorites</string>
     <string name="unfavorite">Remove from Favorites</string>
     <string name="Data_Not_Found">Movie data is not available.</string>

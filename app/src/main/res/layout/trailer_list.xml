@@ -8,12 +8,15 @@
         android:id="@+id/trailer_thumbnail"
         android:layout_width="@dimen/trailer_width"
         android:layout_height="@dimen/trailer_height"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/trailer"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/ic_play_circle_outline_black_32dp" />
+        android:src="@drawable/ic_play_circle_outline_black_32dp"
+        android:contentDescription="@string/play"/>
+
 
 </FrameLayout>
