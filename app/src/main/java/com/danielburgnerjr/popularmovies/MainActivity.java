@@ -15,9 +15,12 @@ import android.widget.Spinner;
 
 import butterknife.ButterKnife;
 
+import com.danielburgnerjr.popularmovies.adapter.MoviesAdapter;
+import com.danielburgnerjr.popularmovies.api.MovieAPI;
 import com.danielburgnerjr.popularmovies.data.PopularMoviesContract;
 import com.danielburgnerjr.popularmovies.data.PopularMoviesDbHelper;
 
+import com.danielburgnerjr.popularmovies.model.Movie;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;

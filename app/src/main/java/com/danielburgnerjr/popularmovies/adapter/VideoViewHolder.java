@@ -1,8 +1,11 @@
-package com.danielburgnerjr.popularmovies;
+package com.danielburgnerjr.popularmovies.adapter;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.danielburgnerjr.popularmovies.R;
+import com.danielburgnerjr.popularmovies.model.Video;
 
 import butterknife.ButterKnife;
 

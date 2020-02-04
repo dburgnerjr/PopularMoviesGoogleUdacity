@@ -6,6 +6,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+
+import com.danielburgnerjr.popularmovies.adapter.ReviewAdapter;
+import com.danielburgnerjr.popularmovies.adapter.VideoAdapter;
+import com.danielburgnerjr.popularmovies.api.MovieAPI;
+import com.danielburgnerjr.popularmovies.model.Movie;
+import com.danielburgnerjr.popularmovies.model.Review;
+import com.danielburgnerjr.popularmovies.model.Video;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;

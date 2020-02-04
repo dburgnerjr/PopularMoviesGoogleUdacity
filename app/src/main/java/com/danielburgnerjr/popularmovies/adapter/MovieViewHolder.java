@@ -1,8 +1,10 @@
-package com.danielburgnerjr.popularmovies;
+package com.danielburgnerjr.popularmovies.adapter;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.danielburgnerjr.popularmovies.R;
 
 @SuppressWarnings("WeakerAccess")
 public class MovieViewHolder extends RecyclerView.ViewHolder {

@@ -1,4 +1,4 @@
-package com.danielburgnerjr.popularmovies;
+package com.danielburgnerjr.popularmovies.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.ArrayList;
 
-@SuppressWarnings("WeakerAccess")
 public class Video implements Parcelable {
     @SerializedName("id")
     private String strID;

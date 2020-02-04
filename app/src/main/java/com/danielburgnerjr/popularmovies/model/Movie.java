@@ -1,4 +1,4 @@
-package com.danielburgnerjr.popularmovies;
+package com.danielburgnerjr.popularmovies.model;
 
 /*
  * Created by dburgnerjr on 5/5/18.

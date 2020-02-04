@@ -1,4 +1,4 @@
-package com.danielburgnerjr.popularmovies;
+package com.danielburgnerjr.popularmovies.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.danielburgnerjr.popularmovies.R;
+import com.danielburgnerjr.popularmovies.model.Review;
 
 import java.util.ArrayList;
 import java.util.List;
