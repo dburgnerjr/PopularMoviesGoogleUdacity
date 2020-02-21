@@ -97,12 +97,7 @@ public class MainActivity extends AppCompatActivity {
     private void getPopularMovies() {
         RestAdapter raAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://api.themoviedb.org/3")
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestFacade request) {
-                        request.addEncodedQueryParam("api_key", getText(R.string.api_key).toString());
-                    }
-                })
+                .setRequestInterceptor(request -> request.addEncodedQueryParam("api_key", getText(R.string.api_key).toString()))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         MovieAPI mtaService = raAdapter.create(MovieAPI.class);
@@ -122,12 +117,7 @@ public class MainActivity extends AppCompatActivity {
     private void getTopRatedMovies() {
         RestAdapter raAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://api.themoviedb.org/3")
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestFacade rfRequest) {
-                        rfRequest.addEncodedQueryParam("api_key", getText(R.string.api_key).toString());
-                    }
-                })
+                .setRequestInterceptor(rfRequest -> rfRequest.addEncodedQueryParam("api_key", getText(R.string.api_key).toString()))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         MovieAPI mtaService = raAdapter.create(MovieAPI.class);

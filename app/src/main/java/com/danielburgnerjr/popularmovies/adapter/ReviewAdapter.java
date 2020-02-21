@@ -45,12 +45,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         holder.mAuthorView.setText(review.getAuthor());
         holder.mContentView.setText(review.getContent());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallbacks.read(review, holder.getAdapterPosition());
-            }
-        });
+        holder.mView.setOnClickListener(v -> mCallbacks.read(review, holder.getAdapterPosition()));
     }
 
     @Override

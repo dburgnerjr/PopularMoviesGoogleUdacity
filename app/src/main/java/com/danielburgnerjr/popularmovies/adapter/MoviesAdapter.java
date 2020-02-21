@@ -34,14 +34,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int nViewType) {
         View vView = mInflater.inflate(R.layout.movie_list, parent, false);
         final MovieViewHolder mvhViewHolder = new MovieViewHolder(vView);
-        vView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View vView) {
-                int nPosition = mvhViewHolder.getAdapterPosition();
-                Intent intI = new Intent(mContext, MovieDetailActivity.class);
-                intI.putExtra(MovieDetailActivity.EXTRA_MOVIE, mMovieList.get(nPosition));
-                mContext.startActivity(intI);
-            }
+        vView.setOnClickListener(vView1 -> {
+            int nPosition = mvhViewHolder.getAdapterPosition();
+            Intent intI = new Intent(mContext, MovieDetailActivity.class);
+            intI.putExtra(MovieDetailActivity.EXTRA_MOVIE, mMovieList.get(nPosition));
+            mContext.startActivity(intI);
         });
         return mvhViewHolder;
     }
