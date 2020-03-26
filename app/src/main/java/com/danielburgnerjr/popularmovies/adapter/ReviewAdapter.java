@@ -53,7 +53,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         return mReviews.size();
     }
 
-    public class ReviewViewHolder extends RecyclerView.ViewHolder {
+    public static class ReviewViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         TextView mAuthorView;
         TextView mContentView;
